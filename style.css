@@ -1,0 +1,46 @@
+body {
+    background-image: url("sunny.jpg");
+    background-repeat: repeat-x;
+    background-position: right top;
+    background-attachment: fixed;
+
+    /* zoom to fit background*/
+    background-size: 100% auto;
+}
+.textBody {
+    background-color: rgba(0, 0, 0, .5);
+    color: white;
+    text-align: center;
+    margin: auto;
+    width: 35%;
+    height: 200px;
+}
+.tempText {
+    color: white;
+    text-align: center;
+    margin: auto;
+    text-shadow: 2px 2px black;
+}
+.textBody h1 {
+    padding: 75px 25px 25px 25px;
+    font-size: 250%;
+}
+.wxReport {
+    display: inline-block;
+    background-color: rgba(0, 0, 0, .5);
+    width: 150px;
+    margin: 30px 15px 15px 15px;
+}
+.tempText img, .tempText h1 {
+    display: inline-block;
+}
+.wxContainer h2 {
+    color: white;
+    text-align: center;
+}
+.wxContainer {
+    /*text-align centers
+    inline-blocks*/
+    text-align: center;
+    margin: 0 auto;
+}
