@@ -37,6 +37,7 @@ body {
 .wxContainer h2 {
     color: white;
     text-align: center;
+    padding: 0px 15px 0px 15px;
 }
 .wxContainer {
     /*text-align centers
@@ -44,3 +45,16 @@ body {
     text-align: center;
     margin: 0 auto;
 }
+
+#icon {
+
+    margin-right: 10px;
+}
+
+.logo img {
+
+
+    width:20%;
+    height: 20%;
+}
+

@@ -6,42 +6,21 @@
       <link rel="stylesheet" src="//normalize-css.googlecode.com/svn/trunk/normalize.css">
       <link rel="stylesheet" href="style.css">
     <title>Your Weather Report</title>
-    <meta http-equiv="Content-Security-Policy" content="img-src https://pinion31.github.io">
+    <meta http-equiv="Content-Security-Policy" content="img-src http://icons.wxug.com https://pinion31.github.io">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 
     <script>
     $(document).ready(function() {
-    //vars to hold position of user
-    var currentLatitude;
-    var currentLongitude;
-    //gets lat and long coordinates
-    function getLocation() {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(getCoordinates);
-        } else {
-            alert("4");
-        }
-    }
-    //callback for getLocation()
-    function getCoordinates(position) {
-        currentLatitude = position.coords.latitude;
-        currentLongitude = position.coords.longitude;
-        callWeather();
-        // now latitude and longitude are available
-    }
-    //converts temp from Kelvin to Fahrenheit
-    function convertToFah(kelvin) {
-        //° F = 9/5(° K - 273) + 32
-        return ((9 / 5) * (kelvin - 273) + 32).toFixed(0);
-    }
-    //converts temp from Kelvin to Celsius
-    function convertToCel(kelvin) {
-        //T(°C) = T(K) - 273.15
-        return (kelvin - 273.15).toFixed(0);
-    }
 
+    var state;
+    var city;
+    var country;
+
+    //feature removed due to API Change
+    //maybe add it later
+    /*
     function updateBackground(condition) {
         //use rain background
         if (condition < 600) {
@@ -58,34 +37,48 @@
         else {
             $("body").css("background-image", "url('sunny.jpg')");
         }
+    }*/
+
+    function callWeather(result){
+
+         $.ajax({
+            url: "http://api.wunderground.com/api/b3a60bacdca0a64e/geolookup/conditions/q/" + state + "/" + city + ".json", dataType:"jsonp", success:function(result) {
+
+                $("#icon").attr("src", result["current_observation"].icon_url);
+
+                $("#city").html("<h2>" + city + "," + state + ", " + country + "</h2>");
+
+                $("#temp").html("<h2>" + (result["current_observation"].temp_f).toFixed(0) + "&#8457;/ " + (result["current_observation"].temp_c).toFixed(0) + "&#8451;" + "</h2>");
+
+                $("#condition").html("<h2>" + result["current_observation"].weather + "</h2>");
+
+                $("#wind").html("<h2>" + result["current_observation"].wind_mph + " mi/h " + result["current_observation"].wind_dir + "</h2>");
+
+                //updateBackground(result.weather[0].id);
+
+                 }
+            });
     }
 
-    //now pass long and lat position to weather app
-    function callWeather() {
+    function getCityLocation() {
 
+          $.ajax({
+            url: "https://freegeoip.net/json", dataType:"jsonp",
+                success:function(result) {
 
-        $.ajax({
-            url: "http://api.openweathermap.org/data/2.5/weather?lat=" + currentLatitude + "&lon=" + currentLongitude + "&appid=d56826e484e74aa219e217dd00836b0d",
-            dataType: "jsonp",
-            success: function(result) {
+                    country = result.country_code;
+                    state = result.region_code;
+                    city = result.city;
 
-                //update html with wx data
-                $("#icon").attr("src", "http://openweathermap.org/img/w/" + result.weather[0].icon + ".png");
+                    callWeather(result);
 
-                $("#city").html("<h2>" + result.name + ", " + result["sys"].country + "</h2>");
-
-                $("#temp").html("<h2>" + convertToFah(result["main"].temp) + "&#8457;/ " + convertToCel(result["main"].temp) + "&#8451;" + "</h2>");
-
-                $("#condition").html("<h2>" + result.weather[0].main + "</h2>");
-
-                $("#wind").html("<h2>" + result["wind"].speed + " mi/h" + "</h2>");
-
-                updateBackground(result.weather[0].id);
-            }
-        });
+                }
+            });
     }
+
+
     // actually call the function getLocation
-    getLocation();
+    getCityLocation();
   });
 
     </script>
@@ -96,18 +89,21 @@
         </div>
         <div class="tempText">
             <img id='icon' src=''>
-            <h1 id="temp">79 F</h1>
+            <h1 id="temp"></h1>
         </div>
         <div class="wxContainer">
             <div class="wxReport" id="city">
-                <h2>Austin,TX</h2>
+                <h2></h2>
             </div>
             <div class="wxReport" id="condition">
-                <h2>Clear</h2>
+                <h2></h2>
             </div>
             <div class="wxReport" id="wind">
-                <h2>N 10 mi/h</h2>
+                <h2></h2>
             </div>
+        </div>
+        <div class="logo">
+            <img src="logo.jpg">
         </div>
     </body>
 </html>
