@@ -42,7 +42,7 @@
     function callWeather(result){
 
          $.ajax({
-            url: "http://api.wunderground.com/api/b3a60bacdca0a64e/geolookup/conditions/q/" + state + "/" + city + ".json", dataType:"jsonp", success:function(result) {
+            url: "https://api.wunderground.com/api/b3a60bacdca0a64e/geolookup/conditions/q/" + state + "/" + city + ".json", dataType:"jsonp", success:function(result) {
 
                 $("#icon").attr("src", result["current_observation"].icon_url);
 
