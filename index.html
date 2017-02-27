@@ -70,7 +70,7 @@
             success: function(result) {
 
                 //update html with wx data
-                $("#icon").attr("src", "http://openweathermap.org/img/w/" + result.weather[0].icon + ".png");
+                $("#icon").attr("src", "https://openweathermap.org/img/w/" + result.weather[0].icon + ".png");
 
                 $("#city").html("<h2>" + result.name + ", " + result["sys"].country + "</h2>");
 
